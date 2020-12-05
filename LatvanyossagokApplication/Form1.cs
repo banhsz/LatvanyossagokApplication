@@ -46,7 +46,8 @@ namespace LatvanyossagokApplication
             //2
             //lista feltöltődik az adatb alapján
             //listbox feltöltődik az adatb alapján
-            //a nevezetességek comboBox feltöltődik az adatb alapján 
+            //a városok comboBox feltöltődik az adatb alapján 
+            //a módosításnál a városok comboBox feltöltődik az adatb alapján
 
             //1
             varosok = new List<Varos>();
@@ -72,6 +73,7 @@ namespace LatvanyossagokApplication
                     listBoxVarosok.Items.Add(Varos.ToString());
                     varosok.Add(Varos);
                     comboBoxLatvanyossagVaros.Items.Add(Varos.Nev);
+                    comboBoxVarosModosit.Items.Add(Varos.Nev);
                 }
             }
 
@@ -165,6 +167,25 @@ namespace LatvanyossagokApplication
             comm.Parameters.AddWithValue("@id", varosid);
             comm.ExecuteNonQuery();
         }
+
+        public void VarosUpdate(int id,string nev,int lakossag)
+        {
+            string sql = @"
+            UPDATE varosok
+            SET
+            nev = @nev,
+            lakossag = @lakossag
+            WHERE id = @id
+            ";
+            //UPDATE `varosok` SET `id`=[value-1],`nev`=[value-2],`lakossag`=[value-3] WHERE 1
+            var comm = this.conn.CreateCommand();
+            comm.CommandText = sql;
+            comm.Parameters.AddWithValue("@id", id);
+            comm.Parameters.AddWithValue("@nev", nev);
+            comm.Parameters.AddWithValue("@lakossag", lakossag);
+            comm.ExecuteNonQuery();
+            varosokFrissites();
+        }
         public void LatvanyossagsBeszuras(string lNeve, string lLeiras,int lAr,string lVaros)
         {
 
@@ -211,6 +232,7 @@ namespace LatvanyossagokApplication
             comm.Parameters.AddWithValue("@id", lId);
             comm.ExecuteNonQuery();
         }
+
 
 
         private void buttonVarosFelvetele_Click(object sender, EventArgs e)
@@ -315,13 +337,124 @@ namespace LatvanyossagokApplication
         }
         private void listBoxVarosok_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listBoxLatvanyossagok.Items.Clear();
-            int seged = varosok[listBoxVarosok.SelectedIndex].Id;
-            for (int i = 0; i < latvanyossagok.Count; i++)
+            if (listBoxVarosok.SelectedIndex >= 0)
             {
-                if (latvanyossagok[i].VarosId == seged)
+                //látványosságok betöltése a listába
+                listBoxLatvanyossagok.Items.Clear();
+                int seged = varosok[listBoxVarosok.SelectedIndex].Id;
+                for (int i = 0; i < latvanyossagok.Count; i++)
                 {
-                    listBoxLatvanyossagok.Items.Add(latvanyossagok[i].ToString());
+                    if (latvanyossagok[i].VarosId == seged)
+                    {
+                        listBoxLatvanyossagok.Items.Add(latvanyossagok[i].ToString());
+                    }
+                }
+
+                //város adatok betöltése a formba
+                //hanyadik város van kiválasztva a listában?
+                int hanyadikVaros = listBoxVarosok.SelectedIndex;
+
+                textBoxVarosModosit.Text = varosok[hanyadikVaros].Nev;
+                numericUpDownLakossagModosit.Value = varosok[hanyadikVaros].Lakossag;
+
+            }
+            else
+            {
+                textBoxVarosModosit.Text = "";
+                numericUpDownLakossagModosit.Value = 0;
+            }
+        }
+        private void listBoxLatvanyossagok_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxLatvanyossagok.SelectedIndex>=0)
+            {
+                //látványosságok adatok betöltése a formba
+                //a listában hanyadik város látványosságát kell törölni?
+                int hanyadikVaros = listBoxVarosok.SelectedIndex;
+                //ennek a varosnak mi az adatbazis id-je?
+                int varosId = varosok[listBoxVarosok.SelectedIndex].Id;
+
+                //Ennek a városnak HANYADIK látványosságát kell törölni?
+                //0 az első
+                int hanyadikLatvanyossag = listBoxLatvanyossagok.SelectedIndex;
+                //MessageBox.Show(String.Format("A {0} id-jű város , {1}. nevezetességét kell törölni",varosId,hanyadikLatvanyossag));
+
+                //Most bejárjuk a látványosság listát (db = -1 kezdőértékkel), és ha találunk egy látványosságot aminek
+                //a város id-je egyezik a varosID-vel. akkor a db-hoz hozzáadunk egyet.
+                //ha a db egyenlő a hanyadikLatvanyossag változóval. akkor amelyik látványosságon éppen vagyunk (i) azt kell kitörölni. annak id-je 
+                //alapján.
+                int db = -1;
+                bool megvan = false;
+                int i = 0;
+                while (!megvan)
+                {
+                    if (latvanyossagok[i].VarosId == varosId)
+                    {
+                        db++;
+                        if (db == hanyadikLatvanyossag)
+                        {
+                            megvan = true;
+                        }
+                    }
+                    if (!megvan)
+                    {
+                        i++;
+                    }
+                }
+                //MessageBox.Show(String.Format("{0}", latvanyossagok[i].Id));
+                textBoxLatvanyossagModosit.Text=latvanyossagok[i].Nev;
+                textBoxLeirasModosit.Text = latvanyossagok[i].Leiras;
+                numericUpDownArModosit.Value = latvanyossagok[i].Ar;
+                comboBoxVarosModosit.Text = varosok[listBoxVarosok.SelectedIndex].Nev;
+            }
+            else
+            {
+                textBoxLatvanyossagModosit.Text = "";
+                textBoxLeirasModosit.Text = "";
+                numericUpDownArModosit.Value = 0;
+                comboBoxVarosModosit.Text = "";
+            }
+        }
+
+        private void buttonVarosModosit_Click(object sender, EventArgs e)
+        {
+            if (listBoxVarosok.SelectedIndex == -1)
+            {
+                MessageBox.Show("Válaszd ki a listából a várost!", "Hiba");
+            }
+            else
+            { 
+                if (textBoxVarosModosit.Text == "" || !(numericUpDownLakossagModosit.Value > 0))
+                {
+                    MessageBox.Show("Érvényes adatokat adj meg!", "Hiba");
+                }
+                else
+                {
+                    //a listában hanyadik város látványosságát kell törölni?
+                    int hanyadikVaros = listBoxVarosok.SelectedIndex;
+                    //ennek a varosnak mi az adatbazis id-je?
+                    int varosId = varosok[listBoxVarosok.SelectedIndex].Id;
+                    VarosUpdate(varosId, textBoxVarosModosit.Text, Convert.ToInt32(numericUpDownLakossagModosit.Value));
+                    MessageBox.Show("Város módosítása sikeres!","Siker");
+                }
+            }
+    }
+
+        private void buttonLatvanyossagModosit_Click(object sender, EventArgs e)
+        {
+            if (listBoxLatvanyossagok.SelectedIndex == -1)
+            {
+                MessageBox.Show("Válaszd ki a listából a nevezetességet!", "Hiba");
+            }
+            else
+            {
+                if (textBoxLatvanyossagModosit.Text == "" || textBoxLeirasModosit.Text == "" || !(numericUpDownArModosit.Value >= 0) || comboBoxVarosModosit.Text == "")
+                {
+                    MessageBox.Show("Érvényes adatokat adj meg! Válassz ki várost is és nevezetességet is!", "Hiba");
+                }
+                else
+                {
+                    MessageBox.Show("Nevezetesség módosítása");
                 }
             }
         }
