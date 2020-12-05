@@ -111,6 +111,7 @@ namespace LatvanyossagokApplication
 
         }
 
+
         public void VarosBeszuras(String varosNeve,int lakossag)
         {
 
@@ -182,6 +183,17 @@ namespace LatvanyossagokApplication
                 MessageBox.Show("Sikertelen adatfelvétel!", "Hiba");
             }
         }
+        public void LatvanyossagTorles(int lId)
+        {
+            string sql = @"
+            DELETE FROM latvanyossagok
+            WHERE id = @id
+            ";
+            var comm = this.conn.CreateCommand();
+            comm.CommandText = sql;
+            comm.Parameters.AddWithValue("@id", lId);
+            comm.ExecuteNonQuery();
+        }
 
 
         private void buttonVarosFelvetele_Click(object sender, EventArgs e)
@@ -195,7 +207,6 @@ namespace LatvanyossagokApplication
                 VarosBeszuras(textBoxVarosNeve.Text,Convert.ToInt32(numericUpDownLakossag.Value));
             }
         }
-
         private void buttonLatvanyossagFelvetele_Click(object sender, EventArgs e)
         {
             if (textBoxLatvanyossagNeve.Text == "" || textBoxLatvanyossagLeiras.Text=="" || !(numericUpDownLatvanyossagAr.Value >= 0) || comboBoxLatvanyossagVaros.Text=="")
@@ -207,7 +218,6 @@ namespace LatvanyossagokApplication
                 LatvanyossagsBeszuras(textBoxLatvanyossagNeve.Text, textBoxLatvanyossagLeiras.Text,Convert.ToInt32(numericUpDownLatvanyossagAr.Value),comboBoxLatvanyossagVaros.Text);
             }
         }
-
         private void buttonVarosTorlese_Click(object sender, EventArgs e)
         {
             if (listBoxVarosok.SelectedIndex < 0)
@@ -237,6 +247,20 @@ namespace LatvanyossagokApplication
                     MessageBox.Show("Sikeres város törlés!","Siker");
                     varosokFrissites();
                 }
+            }
+        }
+        private void buttonLatvanyossagTorlese_Click(object sender, EventArgs e)
+        {
+            if (listBoxLatvanyossagok.SelectedIndex < 0)
+            {
+                MessageBox.Show("Nincs kiválasztva város", "Hiba");
+            }
+            else
+            {
+                int seged = latvanyossagok[listBoxLatvanyossagok.SelectedIndex].Id;
+                LatvanyossagTorles(seged);
+                MessageBox.Show("Sikeres látványosság törlés!", "Siker");
+                latvanyossagokFrissites();
             }
         }
     }

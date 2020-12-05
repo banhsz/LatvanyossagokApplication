@@ -43,6 +43,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listBoxLatvanyossagok = new System.Windows.Forms.ListBox();
             this.buttonVarosTorlese = new System.Windows.Forms.Button();
+            this.buttonLatvanyossagTorlese = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLakossag)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -171,6 +172,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.buttonLatvanyossagTorlese);
             this.groupBox4.Controls.Add(this.listBoxLatvanyossagok);
             this.groupBox4.Location = new System.Drawing.Point(509, 13);
             this.groupBox4.Name = "groupBox4";
@@ -184,7 +186,7 @@
             this.listBoxLatvanyossagok.FormattingEnabled = true;
             this.listBoxLatvanyossagok.Location = new System.Drawing.Point(7, 18);
             this.listBoxLatvanyossagok.Name = "listBoxLatvanyossagok";
-            this.listBoxLatvanyossagok.Size = new System.Drawing.Size(204, 316);
+            this.listBoxLatvanyossagok.Size = new System.Drawing.Size(204, 277);
             this.listBoxLatvanyossagok.TabIndex = 0;
             // 
             // buttonVarosTorlese
@@ -196,6 +198,16 @@
             this.buttonVarosTorlese.Text = "Város törlése";
             this.buttonVarosTorlese.UseVisualStyleBackColor = true;
             this.buttonVarosTorlese.Click += new System.EventHandler(this.buttonVarosTorlese_Click);
+            // 
+            // buttonLatvanyossagTorlese
+            // 
+            this.buttonLatvanyossagTorlese.Location = new System.Drawing.Point(7, 302);
+            this.buttonLatvanyossagTorlese.Name = "buttonLatvanyossagTorlese";
+            this.buttonLatvanyossagTorlese.Size = new System.Drawing.Size(204, 35);
+            this.buttonLatvanyossagTorlese.TabIndex = 1;
+            this.buttonLatvanyossagTorlese.Text = "Látványosság törlése";
+            this.buttonLatvanyossagTorlese.UseVisualStyleBackColor = true;
+            this.buttonLatvanyossagTorlese.Click += new System.EventHandler(this.buttonLatvanyossagTorlese_Click);
             // 
             // formNevezetesseg
             // 
@@ -237,6 +249,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ListBox listBoxLatvanyossagok;
         private System.Windows.Forms.Button buttonVarosTorlese;
+        private System.Windows.Forms.Button buttonLatvanyossagTorlese;
     }
 }
 
