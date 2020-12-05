@@ -122,6 +122,11 @@
             // numericUpDownLatvanyossagAr
             // 
             this.numericUpDownLatvanyossagAr.Location = new System.Drawing.Point(7, 86);
+            this.numericUpDownLatvanyossagAr.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.numericUpDownLatvanyossagAr.Name = "numericUpDownLatvanyossagAr";
             this.numericUpDownLatvanyossagAr.Size = new System.Drawing.Size(209, 20);
             this.numericUpDownLatvanyossagAr.TabIndex = 2;
@@ -142,6 +147,7 @@
             this.buttonLatvanyossagFelvetele.TabIndex = 4;
             this.buttonLatvanyossagFelvetele.Text = "Látványosság Felvétele";
             this.buttonLatvanyossagFelvetele.UseVisualStyleBackColor = true;
+            this.buttonLatvanyossagFelvetele.Click += new System.EventHandler(this.buttonLatvanyossagFelvetele_Click);
             // 
             // groupBox3
             // 

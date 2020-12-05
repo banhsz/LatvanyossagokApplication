@@ -28,5 +28,19 @@ namespace LatvanyossagokApplication
         public string Leiras { get => leiras; set => leiras = value; }
         public int Ar { get => ar; set => ar = value; }
         public int VarosId { get => varosId; set => varosId = value; }
+
+        public override string ToString()
+        {
+            string seged = "";
+            if (this.ar==0)
+            {
+                seged = "Ingyenes";
+            }
+            else
+            {
+                seged = this.ar + " Ft";
+            }
+            return String.Format("{0} -  {1}", this.nev,seged);
+        }
     }
 }
