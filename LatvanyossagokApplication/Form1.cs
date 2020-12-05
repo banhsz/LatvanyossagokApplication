@@ -53,6 +53,7 @@ namespace LatvanyossagokApplication
             varosok = new List<Varos>();
             listBoxVarosok.Items.Clear();
             comboBoxLatvanyossagVaros.Items.Clear();
+            comboBoxVarosModosit.Items.Clear();
 
             string sql = @"
             SELECT `id`, `nev`, `lakossag`
@@ -508,9 +509,9 @@ namespace LatvanyossagokApplication
                         }
                     }
                     //MessageBox.Show(String.Format("{0}", latvanyossagok[i].Id));
-
-                    LatvanyossagUpdate(latvanyossagok[i].Id, textBoxLatvanyossagModosit.Text, textBoxLeirasModosit.Text, Convert.ToInt32(numericUpDownArModosit.Value), comboBoxVarosModosit.SelectedIndex+1);
-                    MessageBox.Show(String.Format("Nevezetesség módosítása sikeres!"+ latvanyossagok[i].Id),"Siker");
+                    int varosIdhelp = varosok[comboBoxVarosModosit.SelectedIndex].Id;
+                    LatvanyossagUpdate(latvanyossagok[i].Id, textBoxLatvanyossagModosit.Text, textBoxLeirasModosit.Text, Convert.ToInt32(numericUpDownArModosit.Value), varosIdhelp);
+                    MessageBox.Show("Nevezetesség módosítása sikeres!","Siker");
 
                 }
             }

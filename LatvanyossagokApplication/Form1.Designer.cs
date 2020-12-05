@@ -33,17 +33,17 @@
             this.buttonVarosFelvetele = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBoxLatvanyossagNeve = new System.Windows.Forms.TextBox();
-            this.textBoxLatvanyossagLeiras = new System.Windows.Forms.TextBox();
-            this.numericUpDownLatvanyossagAr = new System.Windows.Forms.NumericUpDown();
-            this.comboBoxLatvanyossagVaros = new System.Windows.Forms.ComboBox();
             this.buttonLatvanyossagFelvetele = new System.Windows.Forms.Button();
+            this.comboBoxLatvanyossagVaros = new System.Windows.Forms.ComboBox();
+            this.numericUpDownLatvanyossagAr = new System.Windows.Forms.NumericUpDown();
+            this.textBoxLatvanyossagLeiras = new System.Windows.Forms.TextBox();
+            this.textBoxLatvanyossagNeve = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonVarosTorlese = new System.Windows.Forms.Button();
             this.listBoxVarosok = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.listBoxLatvanyossagok = new System.Windows.Forms.ListBox();
-            this.buttonVarosTorlese = new System.Windows.Forms.Button();
             this.buttonLatvanyossagTorlese = new System.Windows.Forms.Button();
+            this.listBoxLatvanyossagok = new System.Windows.Forms.ListBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.buttonLatvanyossagModosit = new System.Windows.Forms.Button();
             this.comboBoxVarosModosit = new System.Windows.Forms.ComboBox();
@@ -121,19 +121,23 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Látványosság hozzáadása (név,leírás/ár/Város)";
             // 
-            // textBoxLatvanyossagNeve
+            // buttonLatvanyossagFelvetele
             // 
-            this.textBoxLatvanyossagNeve.Location = new System.Drawing.Point(6, 32);
-            this.textBoxLatvanyossagNeve.Name = "textBoxLatvanyossagNeve";
-            this.textBoxLatvanyossagNeve.Size = new System.Drawing.Size(210, 20);
-            this.textBoxLatvanyossagNeve.TabIndex = 0;
+            this.buttonLatvanyossagFelvetele.Location = new System.Drawing.Point(7, 141);
+            this.buttonLatvanyossagFelvetele.Name = "buttonLatvanyossagFelvetele";
+            this.buttonLatvanyossagFelvetele.Size = new System.Drawing.Size(209, 52);
+            this.buttonLatvanyossagFelvetele.TabIndex = 4;
+            this.buttonLatvanyossagFelvetele.Text = "Látványosság Felvétele";
+            this.buttonLatvanyossagFelvetele.UseVisualStyleBackColor = true;
+            this.buttonLatvanyossagFelvetele.Click += new System.EventHandler(this.buttonLatvanyossagFelvetele_Click);
             // 
-            // textBoxLatvanyossagLeiras
+            // comboBoxLatvanyossagVaros
             // 
-            this.textBoxLatvanyossagLeiras.Location = new System.Drawing.Point(6, 59);
-            this.textBoxLatvanyossagLeiras.Name = "textBoxLatvanyossagLeiras";
-            this.textBoxLatvanyossagLeiras.Size = new System.Drawing.Size(210, 20);
-            this.textBoxLatvanyossagLeiras.TabIndex = 1;
+            this.comboBoxLatvanyossagVaros.FormattingEnabled = true;
+            this.comboBoxLatvanyossagVaros.Location = new System.Drawing.Point(6, 113);
+            this.comboBoxLatvanyossagVaros.Name = "comboBoxLatvanyossagVaros";
+            this.comboBoxLatvanyossagVaros.Size = new System.Drawing.Size(210, 21);
+            this.comboBoxLatvanyossagVaros.TabIndex = 3;
             // 
             // numericUpDownLatvanyossagAr
             // 
@@ -147,23 +151,19 @@
             this.numericUpDownLatvanyossagAr.Size = new System.Drawing.Size(209, 20);
             this.numericUpDownLatvanyossagAr.TabIndex = 2;
             // 
-            // comboBoxLatvanyossagVaros
+            // textBoxLatvanyossagLeiras
             // 
-            this.comboBoxLatvanyossagVaros.FormattingEnabled = true;
-            this.comboBoxLatvanyossagVaros.Location = new System.Drawing.Point(6, 113);
-            this.comboBoxLatvanyossagVaros.Name = "comboBoxLatvanyossagVaros";
-            this.comboBoxLatvanyossagVaros.Size = new System.Drawing.Size(210, 21);
-            this.comboBoxLatvanyossagVaros.TabIndex = 3;
+            this.textBoxLatvanyossagLeiras.Location = new System.Drawing.Point(6, 59);
+            this.textBoxLatvanyossagLeiras.Name = "textBoxLatvanyossagLeiras";
+            this.textBoxLatvanyossagLeiras.Size = new System.Drawing.Size(210, 20);
+            this.textBoxLatvanyossagLeiras.TabIndex = 1;
             // 
-            // buttonLatvanyossagFelvetele
+            // textBoxLatvanyossagNeve
             // 
-            this.buttonLatvanyossagFelvetele.Location = new System.Drawing.Point(7, 141);
-            this.buttonLatvanyossagFelvetele.Name = "buttonLatvanyossagFelvetele";
-            this.buttonLatvanyossagFelvetele.Size = new System.Drawing.Size(209, 52);
-            this.buttonLatvanyossagFelvetele.TabIndex = 4;
-            this.buttonLatvanyossagFelvetele.Text = "Látványosság Felvétele";
-            this.buttonLatvanyossagFelvetele.UseVisualStyleBackColor = true;
-            this.buttonLatvanyossagFelvetele.Click += new System.EventHandler(this.buttonLatvanyossagFelvetele_Click);
+            this.textBoxLatvanyossagNeve.Location = new System.Drawing.Point(6, 32);
+            this.textBoxLatvanyossagNeve.Name = "textBoxLatvanyossagNeve";
+            this.textBoxLatvanyossagNeve.Size = new System.Drawing.Size(210, 20);
+            this.textBoxLatvanyossagNeve.TabIndex = 0;
             // 
             // groupBox3
             // 
@@ -175,6 +175,16 @@
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Városok";
+            // 
+            // buttonVarosTorlese
+            // 
+            this.buttonVarosTorlese.Location = new System.Drawing.Point(7, 302);
+            this.buttonVarosTorlese.Name = "buttonVarosTorlese";
+            this.buttonVarosTorlese.Size = new System.Drawing.Size(204, 32);
+            this.buttonVarosTorlese.TabIndex = 1;
+            this.buttonVarosTorlese.Text = "Város törlése";
+            this.buttonVarosTorlese.UseVisualStyleBackColor = true;
+            this.buttonVarosTorlese.Click += new System.EventHandler(this.buttonVarosTorlese_Click);
             // 
             // listBoxVarosok
             // 
@@ -196,25 +206,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Látványosságok";
             // 
-            // listBoxLatvanyossagok
-            // 
-            this.listBoxLatvanyossagok.FormattingEnabled = true;
-            this.listBoxLatvanyossagok.Location = new System.Drawing.Point(7, 18);
-            this.listBoxLatvanyossagok.Name = "listBoxLatvanyossagok";
-            this.listBoxLatvanyossagok.Size = new System.Drawing.Size(204, 277);
-            this.listBoxLatvanyossagok.TabIndex = 0;
-            this.listBoxLatvanyossagok.SelectedIndexChanged += new System.EventHandler(this.listBoxLatvanyossagok_SelectedIndexChanged);
-            // 
-            // buttonVarosTorlese
-            // 
-            this.buttonVarosTorlese.Location = new System.Drawing.Point(7, 302);
-            this.buttonVarosTorlese.Name = "buttonVarosTorlese";
-            this.buttonVarosTorlese.Size = new System.Drawing.Size(204, 32);
-            this.buttonVarosTorlese.TabIndex = 1;
-            this.buttonVarosTorlese.Text = "Város törlése";
-            this.buttonVarosTorlese.UseVisualStyleBackColor = true;
-            this.buttonVarosTorlese.Click += new System.EventHandler(this.buttonVarosTorlese_Click);
-            // 
             // buttonLatvanyossagTorlese
             // 
             this.buttonLatvanyossagTorlese.Location = new System.Drawing.Point(7, 302);
@@ -224,6 +215,15 @@
             this.buttonLatvanyossagTorlese.Text = "Látványosság törlése";
             this.buttonLatvanyossagTorlese.UseVisualStyleBackColor = true;
             this.buttonLatvanyossagTorlese.Click += new System.EventHandler(this.buttonLatvanyossagTorlese_Click);
+            // 
+            // listBoxLatvanyossagok
+            // 
+            this.listBoxLatvanyossagok.FormattingEnabled = true;
+            this.listBoxLatvanyossagok.Location = new System.Drawing.Point(7, 18);
+            this.listBoxLatvanyossagok.Name = "listBoxLatvanyossagok";
+            this.listBoxLatvanyossagok.Size = new System.Drawing.Size(204, 277);
+            this.listBoxLatvanyossagok.TabIndex = 0;
+            this.listBoxLatvanyossagok.SelectedIndexChanged += new System.EventHandler(this.listBoxLatvanyossagok_SelectedIndexChanged);
             // 
             // groupBox5
             // 
@@ -328,6 +328,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1020, 367);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox6);
@@ -335,7 +337,11 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "formNevezetesseg";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nevezetességek";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLakossag)).EndInit();
             this.groupBox1.ResumeLayout(false);
