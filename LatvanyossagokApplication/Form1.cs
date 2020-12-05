@@ -274,13 +274,45 @@ namespace LatvanyossagokApplication
             }
             else
             {
-                int seged = latvanyossagok[listBoxLatvanyossagok.SelectedIndex].Id;
-                LatvanyossagTorles(seged);
+                //a listában hanyadik város látványosságát kell törölni?
+                int hanyadikVaros = listBoxVarosok.SelectedIndex;
+                //ennek a varosnak mi az adatbazis id-je?
+                int varosId = varosok[listBoxVarosok.SelectedIndex].Id;
+
+                //Ennek a városnak HANYADIK látványosságát kell törölni?
+                //0 az első
+                int hanyadikLatvanyossag = listBoxLatvanyossagok.SelectedIndex;
+                //MessageBox.Show(String.Format("A {0} id-jű város , {1}. nevezetességét kell törölni",varosId,hanyadikLatvanyossag));
+
+                //Most bejárjuk a látványosság listát (db = -1 kezdőértékkel), és ha találunk egy látványosságot aminek
+                //a város id-je egyezik a varosID-vel. akkor a db-hoz hozzáadunk egyet.
+                //ha a db egyenlő a hanyadikLatvanyossag változóval. akkor amelyik látványosságon éppen vagyunk (i) azt kell kitörölni. annak id-je 
+                //alapján.
+                int db = -1;
+                bool megvan = false;
+                int i = 0;
+                while (!megvan)
+                {
+                    if (latvanyossagok[i].VarosId == varosId)
+                    {
+                        db++;
+                        if (db == hanyadikLatvanyossag)
+                        {
+                            megvan = true;
+                        }
+                    }
+                    if (!megvan)
+                    {
+                        i++;
+                    }
+                }
+                //MessageBox.Show(String.Format("{0}", latvanyossagok[i].Id));
+
+                LatvanyossagTorles(latvanyossagok[i].Id);
                 MessageBox.Show("Sikeres látványosság törlés!", "Siker");
                 latvanyossagokFrissites();
             }
         }
-
         private void listBoxVarosok_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxLatvanyossagok.Items.Clear();
