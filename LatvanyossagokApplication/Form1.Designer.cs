@@ -42,6 +42,7 @@
             this.listBoxVarosok = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listBoxLatvanyossagok = new System.Windows.Forms.ListBox();
+            this.buttonVarosTorlese = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLakossag)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -151,6 +152,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.buttonVarosTorlese);
             this.groupBox3.Controls.Add(this.listBoxVarosok);
             this.groupBox3.Location = new System.Drawing.Point(285, 13);
             this.groupBox3.Name = "groupBox3";
@@ -164,7 +166,7 @@
             this.listBoxVarosok.FormattingEnabled = true;
             this.listBoxVarosok.Location = new System.Drawing.Point(7, 18);
             this.listBoxVarosok.Name = "listBoxVarosok";
-            this.listBoxVarosok.Size = new System.Drawing.Size(204, 316);
+            this.listBoxVarosok.Size = new System.Drawing.Size(204, 277);
             this.listBoxVarosok.TabIndex = 0;
             // 
             // groupBox4
@@ -185,11 +187,21 @@
             this.listBoxLatvanyossagok.Size = new System.Drawing.Size(204, 316);
             this.listBoxLatvanyossagok.TabIndex = 0;
             // 
+            // buttonVarosTorlese
+            // 
+            this.buttonVarosTorlese.Location = new System.Drawing.Point(7, 302);
+            this.buttonVarosTorlese.Name = "buttonVarosTorlese";
+            this.buttonVarosTorlese.Size = new System.Drawing.Size(204, 32);
+            this.buttonVarosTorlese.TabIndex = 1;
+            this.buttonVarosTorlese.Text = "Város törlése";
+            this.buttonVarosTorlese.UseVisualStyleBackColor = true;
+            this.buttonVarosTorlese.Click += new System.EventHandler(this.buttonVarosTorlese_Click);
+            // 
             // formNevezetesseg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(941, 377);
+            this.ClientSize = new System.Drawing.Size(1117, 381);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -224,6 +236,7 @@
         private System.Windows.Forms.ListBox listBoxVarosok;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ListBox listBoxLatvanyossagok;
+        private System.Windows.Forms.Button buttonVarosTorlese;
     }
 }
 

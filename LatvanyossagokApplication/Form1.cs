@@ -110,7 +110,8 @@ namespace LatvanyossagokApplication
             }
 
         }
-        void VarosBeszuras(String varosNeve,int lakossag)
+
+        public void VarosBeszuras(String varosNeve,int lakossag)
         {
 
             string sql = @"
@@ -135,8 +136,18 @@ namespace LatvanyossagokApplication
                 MessageBox.Show("Ilyen város már létezik az adatbázisban!","Hiba");
             }
         }
-
-        void LatvanyossagsBeszuras(string lNeve, string lLeiras,int lAr,string lVaros)
+        public void VarosTorles(int varosid)
+        {
+            string sql = @"
+            DELETE FROM varosok
+            WHERE id = @id
+            ";
+            var comm = this.conn.CreateCommand();
+            comm.CommandText = sql;
+            comm.Parameters.AddWithValue("@id", varosid);
+            comm.ExecuteNonQuery();
+        }
+        public void LatvanyossagsBeszuras(string lNeve, string lLeiras,int lAr,string lVaros)
         {
 
             string sql = @"
@@ -173,7 +184,6 @@ namespace LatvanyossagokApplication
         }
 
 
-
         private void buttonVarosFelvetele_Click(object sender, EventArgs e)
         {
             if (textBoxVarosNeve.Text=="" || !(numericUpDownLakossag.Value > 0))
@@ -195,6 +205,38 @@ namespace LatvanyossagokApplication
             else
             {
                 LatvanyossagsBeszuras(textBoxLatvanyossagNeve.Text, textBoxLatvanyossagLeiras.Text,Convert.ToInt32(numericUpDownLatvanyossagAr.Value),comboBoxLatvanyossagVaros.Text);
+            }
+        }
+
+        private void buttonVarosTorlese_Click(object sender, EventArgs e)
+        {
+            if (listBoxVarosok.SelectedIndex < 0)
+            {
+                MessageBox.Show("Nincs kiválasztva város", "Hiba");
+            }
+            else
+            {
+                int seged = varosok[listBoxVarosok.SelectedIndex].Id;
+                int i = 0;
+                bool van = false;
+                while (!van && i<latvanyossagok.Count)
+                {
+                    if (latvanyossagok[i].VarosId==seged)
+                    {
+                        van = true;
+                    }
+                    i++;
+                }
+                if (van)
+                {
+                    MessageBox.Show("Ehhez a vásorhoz még van felvéve nevezetesség!","Hiba");
+                }
+                else
+                {
+                    VarosTorles(seged);
+                    MessageBox.Show("Sikeres város törlés!","Siker");
+                    varosokFrissites();
+                }
             }
         }
     }
