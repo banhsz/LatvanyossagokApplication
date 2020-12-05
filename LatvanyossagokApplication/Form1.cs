@@ -115,7 +115,7 @@ namespace LatvanyossagokApplication
             }
 
             //2 új
-            if (listBoxVarosok.SelectedIndex>=0)
+            if (listBoxVarosok.SelectedIndex >= 0)
             {
                 listBoxLatvanyossagok.Items.Clear();
                 int seged = varosok[listBoxVarosok.SelectedIndex].Id;
@@ -131,7 +131,7 @@ namespace LatvanyossagokApplication
         }
 
 
-        public void VarosBeszuras(String varosNeve,int lakossag)
+        public void VarosBeszuras(String varosNeve, int lakossag)
         {
 
             string sql = @"
@@ -147,13 +147,13 @@ namespace LatvanyossagokApplication
             try
             {
                 comm.ExecuteNonQuery();
-                MessageBox.Show(String.Format("Sikeres adatbevitel!\n{0}\n{1}",varosNeve,lakossag),"Sikeres művelet");
+                MessageBox.Show(String.Format("Sikeres adatbevitel!\n{0}\n{1}", varosNeve, lakossag), "Sikeres művelet");
                 varosokFrissites();
 
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
-                MessageBox.Show("Ilyen város már létezik az adatbázisban!","Hiba");
+                MessageBox.Show("Ilyen város már létezik az adatbázisban!", "Hiba");
             }
         }
         public void VarosTorles(int varosid)
@@ -167,8 +167,7 @@ namespace LatvanyossagokApplication
             comm.Parameters.AddWithValue("@id", varosid);
             comm.ExecuteNonQuery();
         }
-
-        public void VarosUpdate(int id,string nev,int lakossag)
+        public void VarosUpdate(int id, string nev, int lakossag)
         {
             string sql = @"
             UPDATE varosok
@@ -186,7 +185,8 @@ namespace LatvanyossagokApplication
             comm.ExecuteNonQuery();
             varosokFrissites();
         }
-        public void LatvanyossagsBeszuras(string lNeve, string lLeiras,int lAr,string lVaros)
+
+        public void LatvanyossagsBeszuras(string lNeve, string lLeiras, int lAr, string lVaros)
         {
 
             string sql = @"
@@ -202,7 +202,7 @@ namespace LatvanyossagokApplication
             int varosid = -1;
             for (int i = 0; i < varosok.Count; i++)
             {
-                if (varosok[i].Nev==lVaros)
+                if (varosok[i].Nev == lVaros)
                 {
                     varosid = varosok[i].Id;
                 }
@@ -232,7 +232,28 @@ namespace LatvanyossagokApplication
             comm.Parameters.AddWithValue("@id", lId);
             comm.ExecuteNonQuery();
         }
-
+        public void LatvanyossagUpdate(int id,string nev,string leiras,int ar,int varosId)
+        {
+            string sql = @"
+            UPDATE latvanyossagok
+            SET
+            nev = @nev,
+            leiras = @leiras,
+            ar = @ar,
+            varos_id = @varosId
+            WHERE id = @id
+            ";
+            //UPDATE `latvanyossagok` SET `id`=[value-1],`nev`=[value-2],`leiras`=[value-3],`ar`=[value-4],`varos_id`=[value-5] WHERE 1
+            var comm = this.conn.CreateCommand();
+            comm.CommandText = sql;
+            comm.Parameters.AddWithValue("@id", id);
+            comm.Parameters.AddWithValue("@nev", nev);
+            comm.Parameters.AddWithValue("@leiras", leiras);
+            comm.Parameters.AddWithValue("@ar", ar);
+            comm.Parameters.AddWithValue("@varosId", varosId);
+            comm.ExecuteNonQuery();
+            latvanyossagokFrissites();
+        }
 
 
         private void buttonVarosFelvetele_Click(object sender, EventArgs e)
@@ -335,6 +356,7 @@ namespace LatvanyossagokApplication
                 latvanyossagokFrissites();
             }
         }
+
         private void listBoxVarosok_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBoxVarosok.SelectedIndex >= 0)
@@ -439,7 +461,6 @@ namespace LatvanyossagokApplication
                 }
             }
     }
-
         private void buttonLatvanyossagModosit_Click(object sender, EventArgs e)
         {
             if (listBoxLatvanyossagok.SelectedIndex == -1)
@@ -454,7 +475,43 @@ namespace LatvanyossagokApplication
                 }
                 else
                 {
-                    MessageBox.Show("Nevezetesség módosítása");
+                    //a listában hanyadik város látványosságát kell törölni?
+                    int hanyadikVaros = listBoxVarosok.SelectedIndex;
+                    //ennek a varosnak mi az adatbazis id-je?
+                    int varosId = varosok[listBoxVarosok.SelectedIndex].Id;
+
+                    //Ennek a városnak HANYADIK látványosságát kell törölni?
+                    //0 az első
+                    int hanyadikLatvanyossag = listBoxLatvanyossagok.SelectedIndex;
+                    //MessageBox.Show(String.Format("A {0} id-jű város , {1}. nevezetességét kell törölni",varosId,hanyadikLatvanyossag));
+
+                    //Most bejárjuk a látványosság listát (db = -1 kezdőértékkel), és ha találunk egy látványosságot aminek
+                    //a város id-je egyezik a varosID-vel. akkor a db-hoz hozzáadunk egyet.
+                    //ha a db egyenlő a hanyadikLatvanyossag változóval. akkor amelyik látványosságon éppen vagyunk (i) azt kell kitörölni. annak id-je 
+                    //alapján.
+                    int db = -1;
+                    bool megvan = false;
+                    int i = 0;
+                    while (!megvan)
+                    {
+                        if (latvanyossagok[i].VarosId == varosId)
+                        {
+                            db++;
+                            if (db == hanyadikLatvanyossag)
+                            {
+                                megvan = true;
+                            }
+                        }
+                        if (!megvan)
+                        {
+                            i++;
+                        }
+                    }
+                    //MessageBox.Show(String.Format("{0}", latvanyossagok[i].Id));
+
+                    LatvanyossagUpdate(latvanyossagok[i].Id, textBoxLatvanyossagModosit.Text, textBoxLeirasModosit.Text, Convert.ToInt32(numericUpDownArModosit.Value), comboBoxVarosModosit.SelectedIndex+1);
+                    MessageBox.Show(String.Format("Nevezetesség módosítása sikeres!"+ latvanyossagok[i].Id),"Siker");
+
                 }
             }
         }
