@@ -169,6 +169,7 @@
             this.listBoxVarosok.Name = "listBoxVarosok";
             this.listBoxVarosok.Size = new System.Drawing.Size(204, 277);
             this.listBoxVarosok.TabIndex = 0;
+            this.listBoxVarosok.SelectedIndexChanged += new System.EventHandler(this.listBoxVarosok_SelectedIndexChanged);
             // 
             // groupBox4
             // 

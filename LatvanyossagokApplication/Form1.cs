@@ -80,9 +80,12 @@ namespace LatvanyossagokApplication
         {
             //1
             //lista törlődik
-            //2
+            //2 régi
             //lista feltöltődik az adatb alapján
+            //2 új
+            //lista feltöltődik a kiválasztott város alapján
 
+            //1
             latvanyossagok = new List<Latvanyossag>();
             listBoxLatvanyossagok.Items.Clear();
 
@@ -103,9 +106,23 @@ namespace LatvanyossagokApplication
                     int varosId = reader.GetInt32("varos_id");
 
                     Latvanyossag latv = new Latvanyossag(id, nev, leiras, ar, varosId);
-                    //2
-                    listBoxLatvanyossagok.Items.Add(latv.ToString());
+                    //2 régi
+                    //listBoxLatvanyossagok.Items.Add(latv.ToString());
                     latvanyossagok.Add(latv);
+                }
+            }
+
+            //2 új
+            if (listBoxVarosok.SelectedIndex>=0)
+            {
+                listBoxLatvanyossagok.Items.Clear();
+                int seged = varosok[listBoxVarosok.SelectedIndex].Id;
+                for (int i = 0; i < latvanyossagok.Count; i++)
+                {
+                    if (latvanyossagok[i].VarosId == seged)
+                    {
+                        listBoxLatvanyossagok.Items.Add(latvanyossagok[i].ToString());
+                    }
                 }
             }
 
@@ -261,6 +278,19 @@ namespace LatvanyossagokApplication
                 LatvanyossagTorles(seged);
                 MessageBox.Show("Sikeres látványosság törlés!", "Siker");
                 latvanyossagokFrissites();
+            }
+        }
+
+        private void listBoxVarosok_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBoxLatvanyossagok.Items.Clear();
+            int seged = varosok[listBoxVarosok.SelectedIndex].Id;
+            for (int i = 0; i < latvanyossagok.Count; i++)
+            {
+                if (latvanyossagok[i].VarosId == seged)
+                {
+                    listBoxLatvanyossagok.Items.Add(latvanyossagok[i].ToString());
+                }
             }
         }
     }
