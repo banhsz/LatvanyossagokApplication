@@ -15,13 +15,19 @@ namespace LatvanyossagokApplication
 {
     public partial class formNevezetesseg : Form
     {
+        List<Varos> varosok;
+        List<Latvanyossag> latvanyossagok;
         MySqlConnection conn;
         public formNevezetesseg()
         {
             InitializeComponent();
+            varosok = new List<Varos>();
+            latvanyossagok = new List<Latvanyossag>();
+
             conn = new MySqlConnection("server = localhost; database = latvanyossagokdb; uid = root; pwd = ;");
             conn.Open();
-
+            varosokFrissites();
+            latvanyossagokFrissites();
             this.FormClosed += (sender, args) =>
             {
                 if (conn != null)
@@ -29,6 +35,43 @@ namespace LatvanyossagokApplication
                     conn.Close();
                 }
             };
+        }
+        public void varosokFrissites()
+        {
+            //1
+            //listbox törlődik
+            //lista törlődik
+            //2
+            //lista feltöltődik az adatb alapján
+            //listbox feltöltődik a lista alapján
+
+            varosok = new List<Varos>();
+            listBoxVarosok.Items.Clear();
+
+            string sql = @"
+            SELECT `id`, `nev`, `lakossag`
+            FROM varosok
+            ";
+            var comm = this.conn.CreateCommand();
+            comm.CommandText = sql;
+            using (var reader = comm.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32("id");
+                    string nev = reader.GetString("nev");
+                    int lakossag = reader.GetInt32("lakossag");
+
+                    var Varos = new Varos(id, nev, lakossag);
+                    listBoxVarosok.Items.Add(Varos.ToString());
+                    varosok.Add(Varos);
+                }
+            }
+
+        }
+        public void latvanyossagokFrissites()
+        {
+
         }
         void AdatBeszuras(String varosNeve,int lakossag)
         {
@@ -65,5 +108,6 @@ namespace LatvanyossagokApplication
                 AdatBeszuras(textBoxVarosNeve.Text,Convert.ToInt32(numericUpDownLakossag.Value));
             }
         }
+
     }
 }
